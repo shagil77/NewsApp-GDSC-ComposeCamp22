@@ -17,43 +17,32 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.gdsc.newsapp.presentation.HomeScreen
 import com.gdsc.newsapp.ui.theme.NewsAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ArticleItem()
+            NewsAppTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colors.background
+                ) {
+                    MyApp {
+                        HomeScreen()
+                    }
+                }
+            }
         }
     }
-}
-
-@Composable
-fun ArticleItem() {
-    Card(shape = RoundedCornerShape(10.dp)) {
-        Column {
-            Image(painter = painterResource(id = R.drawable.demo_gdsc), contentDescription = "",
-            modifier = Modifier
-                .height(300.dp)
-                .fillMaxWidth(),
-            contentScale = ContentScale.Crop)
-
-            Text(
-                text = "Dummy News",
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-        }
-    }
-    
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    NewsAppTheme {
-        ArticleItem()
+    @Composable
+    fun MyApp(content:@Composable ()-> Unit) {
+        content()
     }
 }
+
+
+

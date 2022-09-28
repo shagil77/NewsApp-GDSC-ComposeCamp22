@@ -6,15 +6,21 @@ import androidx.lifecycle.viewModelScope
 import com.gaur.composenewsapplication.utils.Resource
 import com.gdsc.newsapp.domain.model.Article
 import com.gdsc.newsapp.util.GetNewsArticleUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
+@HiltViewModel
 class HomeScreenViewModel @Inject constructor(
     private val getNewsArticleUseCase: GetNewsArticleUseCase
     ):ViewModel() {
 
     val article = mutableStateOf(HomeScreenState())
+
+    init {
+        getNewsArticle()
+    }
 
     fun getNewsArticle() {
         getNewsArticleUseCase().onEach {
